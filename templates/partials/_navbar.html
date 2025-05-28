@@ -24,9 +24,11 @@
             <li class="nav-item mr-3">
               <a class="nav-link" href="{% url 'pages:about' %}">About</a>
             </li>
-                {% comment %} fix listings {% endcomment %}
-              <a class="nav-link" href="listings.html">Featured Listings</a>
-            </li>
+            <li {% if 'listings' in request.path %}class="nav-item active mr-3" {% else %}
+            class="nav-item mr-3" {% endif %}>
+                {% comment %} fix listings the first listings is app name, secoind listings is endpoint{% endcomment %} 
+              <a class="nav-link" href={% url 'listings:listings' %}>Featured Listings</a>
+            </li> 
           </ul>
 
           <ul class="navbar-nav ml-auto">
