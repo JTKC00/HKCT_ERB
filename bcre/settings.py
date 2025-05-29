@@ -84,8 +84,11 @@ WSGI_APPLICATION = 'bcre.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'bcredb',
+        'USER': 'postgres',
+        'PASSWORD': os.getenv('DB_PASSWORD'),  # Use environment variable for security
+        'HOST': 'localhost',  # Set to 'localhost' for local development
     }
 }
 
@@ -138,3 +141,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Directory where uploaded files will be stored
+MEDIA_URL = '/media/' # URL that serves the media files
