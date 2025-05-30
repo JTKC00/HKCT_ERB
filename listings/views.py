@@ -1,15 +1,17 @@
 from django.shortcuts import render
-
+from listings.models import Listing  # Import the Listing model from models.py
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger  # Import Paginator for pagination functionality
 # Create your views here.
 def index(request):
-    return render(request, 'listings/listings.html')
+    listings = Listing.objects.all() # Fetch all listings from the database
+    paginator = Paginator(listings, 3)  # Create a Paginator object for pagination
+    page = request.GET.get('page')  # Get the current page number from the request
+    paged_listings = paginator.get_page(page)  # Get the listings for the current page
+    context = {'listings': paged_listings}  # Prepare context with paged listings
+    return render(request, 'listings/listings.html', context)
 def listing(request, listing_id):
-    return render(request, 'listings/listing.html') 
+    listing = Listing.objects.get(id=listing_id)  # Fetch the specific listing
+    context = {'listing': listing}  # Prepare context with the specific listing
+    return render(request, 'listings/listing.html', context)
 def search(request):
     return render(request, 'listings/search.html') 
-
-# The above code defines three views for the listings app:
-# 1. `index`: Renders the main listings page.
-# 2. `listing`: Renders the detail page for a specific listing, identified by `listing_id`. 
-# 3. `search`: Renders the search page for listings.
-# These views use Django's `render` function to return the appropriate HTML templates.
