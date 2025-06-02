@@ -10,8 +10,8 @@ def index(request):
     context = {'listings': paged_listings}  # Prepare context with paged listings
     return render(request, 'listings/listings.html', context)
 def listing(request, listing_id):
-    listing = Listing.objects.get(id=listing_id)  # Fetch the specific listing
-    context = {'listing': listing}  # Prepare context with the specific listing
-    return render(request, 'listings/listing.html', context)
+    # listing = Listing.objects.get(id=listing_id)  # Fetch the specific listing
+    # context = {'listing': listing}  # Prepare context with the specific listing
+    return render(request, 'listings/listing.html')
 def search(request):
     return render(request, 'listings/search.html') 
