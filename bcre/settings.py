@@ -28,10 +28,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SITE_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = [] #later can put cloud server ip here, of course local ip can also be applyed
-
+# DEBUG = False
+DEBUG = True  # Set to False for production, True for development
+#ALLOWED_HOSTS = ["localhost", "127.0.0.1"] #later can put cloud server ip here, of course local ip can also be applyed
+ALLOWED_HOSTS = ["*"]  # Allow all hosts for development; restrict in production
 
 # Application definition
 
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [ # process Login Logout
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # For serving static files in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
