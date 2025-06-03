@@ -3,12 +3,16 @@ from django.urls import reverse
 from django.http import HttpResponse
 from listings.models import Listing  # Import the Listing model to use in views
 from realtors.models import Realtor  # Import the Realtor model to use in views
+from listings.choices import price_choices, bedroom_choices, district_choices  # Import choices for filtering listings
 # Create your views here.
 def index(request):
     # return HttpResponse("<h1>Hello World</h1>")   #testing
     listings = Listing.objects.order_by('-list_date').filter(is_published=True)[:3]  # Get all listings ordered by list date, only published ones
-    context = {"listings": listings}  # Create a context dictionary to pass to the template
-    return render(request,'pages/index.html', context) 
+    context = {"listings": listings,
+    "price_choices": price_choices,
+    "bedroom_choices": bedroom_choices,
+    "district_choices": district_choices}  # Create a context dictionary to pass to the template
+    return render(request,'pages/index.html', context)
 
 def about(request):
     # pages_url = reverse('pages:about')  # get the url of about page
