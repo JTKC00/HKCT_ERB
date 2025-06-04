@@ -2,6 +2,7 @@ from django.db import models # Import necessary Django models
 from django.utils import timezone # Import timezone for date handling
 from realtors.models import Realtor  # Assuming a Realtor model exists in the realtors app
 from datetime import datetime # Import datetime for date handling
+from listings.choices import district_choices  # Import choices for filtering listings
 # Create your models here.
 class Listing(models.Model):
     realtor = models.ForeignKey(Realtor, on_delete=models.DO_NOTHING) # Assuming Realtor model exists /CASCADE is also an option 
@@ -9,7 +10,7 @@ class Listing(models.Model):
     price = models.IntegerField() # Price of the listing
     address = models.CharField(max_length=200) # Full address of the listing
     street = models.CharField(max_length=200) # Street address
-    district = models.CharField(max_length=50) # District or area of the listing
+    district = models.CharField(max_length=50, choices=district_choices.items()) # District or area of the listing
     description = models.TextField(blank=True) # Description of the listing
     bedrooms = models.IntegerField() # Number of bedrooms
     bathrooms = models.DecimalField(max_digits=2, decimal_places=1) # Number of bathrooms

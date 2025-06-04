@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('pages.urls', namespace='pages')),
     path('listings/', include('listings.urls', namespace='listings')),
     # namespace is used to avoid name conflicts in urls
+    path('accounts/', include('accounts.urls', namespace='accounts')),
     path('admin/', admin.site.urls),
     ] + debug_toolbar_urls() + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # The static function is used to serve media files during development
