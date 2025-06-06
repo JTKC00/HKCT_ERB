@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-{%block content%}
+{% load humanize %}
+{% block title %} | {{ user.username }} {% endblock title %}
+{% block content %}
     <!-- Showcase -->
     <section id="showcase-inner" class="py-5 text-white">
       <div class="container">
@@ -27,11 +29,13 @@
     </section>
     
     <!-- Dashboard -->
+    {% include "partials/_alert.html" %}
     <section id="dashboard" class="py-4">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <h2>Welcome {{ user.username }}</h2>
+            <h2>Welcome  {{user.last_name | title}} {{ user.first_name | title}}</h2>
+            {% if contacts %}
             <p>Here are the property listings that you have inquired about</p>
             <table class="table">
               <thead>
@@ -42,32 +46,23 @@
                 </tr>
               </thead>
               <tbody>
+                {% for contact in contacts %}
                 <tr>
-                  <td>22</td>
-                  <td>45 Prince Street</td>
+                  <td>{{contact.id}}</td>
+                  <td>{{contact.listings}}</td>
                   <td>
-                    <a class="btn btn-light" href="#">View Listing</a>
+                    <a class="btn btn-dark" href="{% url 'listings:listing' contact.listing_id %}">View Listing</a>
+                    <a href="{% url 'contacts:delete_contact' contact.id%}" class="btn btn-danger">Delete Listing</a>
+                    <a href="{% url 'contacts:edit_contact' contact.id%}" class="btn btn-success">Edit Message</a>
                   </td>
                 </tr>
-                <tr>
-                  <td>43</td>
-                  <td>22 Westbrook rd</td>
-                  <td>
-                    <a class="btn btn-light" href="#">View Listing</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>31</td>
-                  <td>12 Samson Ave</td>
-                  <td>
-                    <a class="btn btn-light" href="#">View Listing</a>
-                  </td>
-                </tr>
+                {% endfor %}
               </tbody>
+              <table class="table">
             </table>
+            {% endif %}
           </div>
         </div>
       </div>
     </section>
 {% endblock content %}
-
